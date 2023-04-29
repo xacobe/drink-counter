@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Bebidas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Control de Bebidas</h1>
+    <div class="controls">
+        <!-- Controles y formulario -->
+        <select id="drinkSelector">
+            <option value="" disabled selected>Selecciona una bebida</option>
+        </select>
+        <button id="addDrinkBtn">Añadir bebida</button>
+        <button id="subtractDrinkBtn">Restar bebida</button>
+        <form id="addDrinkForm">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" required>
+            <label for="brand">Marca:</label>
+            <input type="text" id="brand" required>
+            <label for="alcohol">Alcohol (%):</label>
+            <input type="number" id="alcohol" required>
+            <label for="isInvited">Invitada:</label>
+            <input type="checkbox" id="isInvited">
+            <button type="submit">Guardar bebida</button>
+        </form>
+        <button id="resetBtn">Resetear contador (últimas 12 horas)</button>
+
+    </div>
+    <div class="display">
+        <!-- Vista -->
+        <p>Bebidas en las últimas 12 horas: <span id="drinkCount">0</span></p>
+        <p>Alcohol en las últimas 12 horas: <span id="alcoholCount">0</span></p>
+        <table id="drinkTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Alcohol</th>
+                    <th>Fecha (hora:minutos-mes-año)</th>
+                    <th>Diferencia (hh:mm:ss)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas de la tabla generadas dinámicamente -->
+            </tbody>
+        </table>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
