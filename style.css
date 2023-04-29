@@ -50,3 +50,9 @@ td.invited {
     width: 80px;
     text-align: center;
 }
+/* Agregar estilos para la columna "pagada" */
+th.paid,
+td.paid {
+    width: 80px;
+    text-align: center;
+}

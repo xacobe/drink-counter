@@ -3,6 +3,7 @@ const addDrinkBtn = document.getElementById("addDrinkBtn");
 const subtractDrinkBtn = document.getElementById("subtractDrinkBtn");
 const addDrinkForm = document.getElementById("addDrinkForm");
 const isInvitedCheckbox = document.getElementById("isInvitedCheckbox");
+const isPaidCheckbox = document.getElementById("isPaidCheckbox");
 const resetBtn = document.getElementById("resetBtn");
 const drinkCount = document.getElementById("drinkCount");
 const alcoholCount = document.getElementById("alcoholCount");
@@ -27,6 +28,7 @@ function addDrink() {
 
   const drinkEntry = {
     ...selectedDrink,
+    isPaid: isPaidCheckbox.checked, // Añadir información de "pagada"
     isInvited: isInvitedCheckbox.checked, // Añadir información de "invitada"
     timestamp: new Date().getTime(),
   };
@@ -131,6 +133,11 @@ function updateDisplay() {
     invitedCell.className = "invited";
     invitedCell.textContent = entry.isInvited ? "Sí" : "No";
     row.appendChild(invitedCell);
+
+    const paidCell = document.createElement("td");
+    paidCell.className = "paid";
+    paidCell.textContent = entry.isPaid ? "Sí" : "No";
+    row.appendChild(paidCell);
 
     tbody.appendChild(row);
   });
