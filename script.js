@@ -2,6 +2,7 @@ const drinkSelector = document.getElementById("drinkSelector");
 const addDrinkBtn = document.getElementById("addDrinkBtn");
 const subtractDrinkBtn = document.getElementById("subtractDrinkBtn");
 const addDrinkForm = document.getElementById("addDrinkForm");
+const isInvitedCheckbox = document.getElementById("isInvitedCheckbox");
 const resetBtn = document.getElementById("resetBtn");
 const drinkCount = document.getElementById("drinkCount");
 const alcoholCount = document.getElementById("alcoholCount");
@@ -19,20 +20,21 @@ function populateDrinkSelector() {
   });
 }
 
+// Función para añadir una bebida al historial
 function addDrink() {
-  // Función para añadir una bebida al historial
   const selectedDrink = JSON.parse(drinkSelector.value);
-    if (!selectedDrink) return;
+  if (!selectedDrink) return;
 
-    const drinkEntry = {
-        ...selectedDrink,
-        timestamp: new Date().getTime()
-    };
+  const drinkEntry = {
+    ...selectedDrink,
+    isInvited: isInvitedCheckbox.checked, // Añadir información de "invitada"
+    timestamp: new Date().getTime(),
+  };
 
-    drinkHistory.push(drinkEntry);
-    localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
+  drinkHistory.push(drinkEntry);
+  localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
 
-    updateDisplay();
+  updateDisplay();
 }
 
 function subtractDrink() {
@@ -52,7 +54,6 @@ function addNewDrink(e) {
         name: addDrinkForm.name.value,
         brand: addDrinkForm.brand.value,
         alcohol: parseFloat(addDrinkForm.alcohol.value),
-        isInvited: addDrinkForm.isInvited.checked
     };
 
     drinks.push(newDrink);
@@ -125,6 +126,11 @@ function updateDisplay() {
     const seconds = Math.floor((timeDifference % (60 * 1000)) / 1000);
     timeDifferenceCell.textContent = `${hours}:${minutes}:${seconds}`;
     row.appendChild(timeDifferenceCell);
+
+    const invitedCell = document.createElement("td");
+    invitedCell.className = "invited";
+    invitedCell.textContent = entry.isInvited ? "Sí" : "No";
+    row.appendChild(invitedCell);
 
     tbody.appendChild(row);
   });

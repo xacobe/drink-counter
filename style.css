@@ -43,3 +43,10 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+/* Agregar estilos para la columna "invitada" */
+th.invited,
+td.invited {
+    width: 80px;
+    text-align: center;
+}
