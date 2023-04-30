@@ -110,6 +110,10 @@ function updateDisplay() {
     .reduce((total, entry) => total + entry.alcohol, 0)
     .toFixed(2);
 
+  const unpaidDrinks = last12Hours.filter((entry) => !entry.isPaid);
+  const unpaidDrinksCount = document.getElementById("unpaidDrinksCount");
+  unpaidDrinksCount.textContent = unpaidDrinks.length;
+
   // Actualizar tabla
   const tbody = drinkTable.querySelector("tbody");
   tbody.innerHTML = "";
@@ -199,7 +203,45 @@ function updateDisplay() {
     });
 
     tbody.appendChild(row);
-  };
+  }
+
+  // Actualizar tabla de bebidas sin pagar por bar
+  const unpaidDrinksTable = document.getElementById("unpaidDrinksTable");
+  const unpaidDrinksTbody = unpaidDrinksTable.querySelector("tbody");
+  unpaidDrinksTbody.innerHTML = "";
+
+  const unpaidDrinksByBar = unpaidDrinks.reduce((result, drink) => {
+    if (!result[drink.bar]) {
+      result[drink.bar] = [];
+    }
+    result[drink.bar].push(drink);
+    return result;
+  }, {});
+
+  Object.entries(unpaidDrinksByBar).forEach(([bar, drinks]) => {
+    const row = document.createElement("tr");
+
+    const barCell = document.createElement("td");
+    barCell.textContent = bar;
+    row.appendChild(barCell);
+
+    const drinksCell = document.createElement("td");
+    const drinksList = document.createElement("ol");
+    const drinkCounts = drinks.reduce((acc, drink) => {
+      acc[drink.name] = (acc[drink.name] || 0) + 1;
+      return acc;
+    }, {});
+
+    for (const [drinkName, count] of Object.entries(drinkCounts)) {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${drinkName} x${count}`;
+      drinksList.appendChild(listItem);
+    }
+
+    drinksCell.appendChild(drinksList);
+    row.appendChild(drinksCell);
+    unpaidDrinksTbody.appendChild(row);
+  });
 }
 
 // Event listeners
