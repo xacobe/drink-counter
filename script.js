@@ -1,10 +1,10 @@
 const drinkSelector = document.getElementById("drinkSelector");
 const addDrinkBtn = document.getElementById("addDrinkBtn");
 const subtractDrinkBtn = document.getElementById("subtractDrinkBtn");
+const resetBtn = document.getElementById("resetBtn");
 const addDrinkForm = document.getElementById("addDrinkForm");
 const isInvitedCheckbox = document.getElementById("isInvitedCheckbox");
 const isPaidCheckbox = document.getElementById("isPaidCheckbox");
-const resetBtn = document.getElementById("resetBtn");
 const drinkCount = document.getElementById("drinkCount");
 const alcoholCount = document.getElementById("alcoholCount");
 const drinkTable = document.getElementById("drinkTable");
@@ -69,19 +69,6 @@ function addNewDrink(e) {
     updateDisplay();
 }
 
-// Función para resetear el contador de bebidas en las últimas 12 horas
-function resetDrinkCounter() {
-  const currentTime = new Date().getTime();
-  const twelveHoursAgo = currentTime - 12 * 60 * 60 * 1000;
-
-  drinkHistory = drinkHistory.filter(
-    (entry) => entry.timestamp >= twelveHoursAgo
-  );
-  localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
-
-  updateDisplay();
-}
-
 // Función para actualizar la vista
 function updateDisplay() {
   // Actualizar contador de bebidas y alcohol en las últimas 12 horas
@@ -100,7 +87,8 @@ function updateDisplay() {
   const tbody = drinkTable.querySelector("tbody");
   tbody.innerHTML = "";
 
-  drinkHistory.forEach((entry, index) => {
+  for (let index = drinkHistory.length - 1; index >= 0; index--) {
+    const entry = drinkHistory[index];
     const row = document.createElement("tr");
 
     const nameCell = document.createElement("td");
@@ -139,15 +127,38 @@ function updateDisplay() {
     paidCell.textContent = entry.isPaid ? "Sí" : "No";
     row.appendChild(paidCell);
 
+    // Crea un input tipo checkbox para la celda de invitaciones
+    const invitedCheckbox = document.createElement("input");
+    invitedCheckbox.type = "checkbox";
+    invitedCheckbox.checked = entry.isInvited;
+    invitedCell.appendChild(invitedCheckbox);
+
+    // Crea un input tipo checkbox para la celda de pagos
+    const paidCheckbox = document.createElement("input");
+    paidCheckbox.type = "checkbox";
+    paidCheckbox.checked = entry.isPaid;
+    paidCell.appendChild(paidCheckbox);
+
+    // Añade eventos de cambio a los checkboxes
+    invitedCheckbox.addEventListener("change", () => {
+      entry.isInvited = !entry.isInvited;
+      localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
+    });
+
+    paidCheckbox.addEventListener("change", () => {
+      entry.isPaid = !entry.isPaid;
+      localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
+    });
+
     tbody.appendChild(row);
-  });
+  };
 }
 
 // Event listeners
 addDrinkBtn.addEventListener("click", addDrink);
 subtractDrinkBtn.addEventListener("click", subtractDrink);
 addDrinkForm.addEventListener("submit", addNewDrink);
-resetBtn.addEventListener("click", resetDrinkCounter);
+// resetBtn.addEventListener("click", resetDrinkCounter);
 
 // Inicialización
 populateDrinkSelector();
