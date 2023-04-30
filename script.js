@@ -122,16 +122,13 @@ function updateDisplay() {
     nameCell.textContent = entry.name;
     row.appendChild(nameCell);
 
+    const brandCell = document.createElement("td");
+    brandCell.textContent = entry.brand;
+    row.appendChild(brandCell);
+
     const alcoholCell = document.createElement("td");
     alcoholCell.textContent = entry.alcohol;
     row.appendChild(alcoholCell);
-
-    const date = new Date(entry.timestamp);
-    const dateCell = document.createElement("td");
-    dateCell.textContent = `${date.getHours()}:${date.getMinutes()}-${
-      date.getMonth() + 1
-    }-${date.getFullYear()}`;
-    row.appendChild(dateCell);
 
     const timeDifference =
       index === 0 ? 0 : entry.timestamp - drinkHistory[index - 1].timestamp;
@@ -144,15 +141,26 @@ function updateDisplay() {
     timeDifferenceCell.textContent = `${hours}:${minutes}:${seconds}`;
     row.appendChild(timeDifferenceCell);
 
-    const invitedCell = document.createElement("td");
-    invitedCell.className = "invited";
-    invitedCell.textContent = entry.isInvited ? "Sí" : "No";
-    row.appendChild(invitedCell);
+    const barCell = document.createElement("td");
+    barCell.textContent = entry.bar;
+    row.appendChild(barCell);
+
+    const date = new Date(entry.timestamp);
+    const dateCell = document.createElement("td");
+    dateCell.textContent = `${date.getHours()}:${date.getMinutes()}-${
+      date.getMonth() + 1
+    }-${date.getFullYear()}`;
+    row.appendChild(dateCell);
 
     const paidCell = document.createElement("td");
     paidCell.className = "paid";
     paidCell.textContent = entry.isPaid ? "Sí" : "No";
     row.appendChild(paidCell);
+
+    const invitedCell = document.createElement("td");
+    invitedCell.className = "invited";
+    invitedCell.textContent = entry.isInvited ? "Sí" : "No";
+    row.appendChild(invitedCell);
 
     // Crea un input tipo checkbox para la celda de invitaciones
     const invitedCheckbox = document.createElement("input");
@@ -165,6 +173,19 @@ function updateDisplay() {
     paidCheckbox.type = "checkbox";
     paidCheckbox.checked = entry.isPaid;
     paidCell.appendChild(paidCheckbox);
+
+    // Crea un botón para eliminar el registro
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Eliminar";
+    deleteBtn.className = "delete";
+    row.appendChild(deleteBtn);
+
+    // Añade el evento de clic al botón de eliminar
+    deleteBtn.addEventListener("click", () => {
+      drinkHistory.splice(index, 1);
+      localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
+      updateDisplay();
+    });
 
     // Añade eventos de cambio a los checkboxes
     invitedCheckbox.addEventListener("change", () => {
