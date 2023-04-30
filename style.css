@@ -1,58 +1,100 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset CSS */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #f5f5f5;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 20px;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #4a4a4a;
 }
 
-.controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
+.controls,
 .display {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin-bottom: 2rem;
+}
+
+form input,
+form select,
+form button {
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+form button {
+    background-color: #9ad9db;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background-color: #7cb9bd;
 }
 
 table {
-    border-collapse: collapse;
     width: 100%;
-    max-width: 800px;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
 }
 
+table,
 th,
 td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
+    border: 1px solid #c1c1c1;
+    padding: 0.5rem;
+    text-align: center;
 }
 
 th {
-    background-color: #f2f2f2;
-    color: white;
+    background-color: #e8e8e8;
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* Agregar estilos para la columna "invitada" */
-th.invited,
-td.invited {
-    width: 80px;
-    text-align: center;
+label {
+    display: inline-block;
+    margin-right: 1rem;
 }
-/* Agregar estilos para la columna "pagada" */
-th.paid,
-td.paid {
-    width: 80px;
+
+button#addDrinkBtn,
+button#subtractDrinkBtn {
+    background-color: #9ad9db;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
     text-align: center;
+    line-height: 30px;
+    margin-left: 10px;
+}
+
+button#addDrinkBtn:hover,
+button#subtractDrinkBtn:hover {
+    background-color: #7cb9bd;
 }
