@@ -31,7 +31,18 @@
             <label for="brand">Marca:</label>
             <input type="text" id="brand" required>
             <label for="alcohol">Alcohol (%):</label>
-            <input type="range" id="alcohol" required>
+            <!-- <input type="range" id="alcohol" required> -->
+            <input id="alcohol" type="number" name="alcohol" step="0.1" max="80" list="defaultNumbers" required />
+            <span class="validity"></span>
+            <datalist id="defaultNumbers">
+                <option value="4.5"></option>
+                <option value="5"></option>
+                <option value="5.5"></option>
+                <option value="6"></option>
+                <option value="6.5"></option>
+                <option value="7"></option>
+            </datalist>
+
             <button type="submit">Guardar bebida</button>
         </form>
     </div>
