@@ -23,6 +23,10 @@
             Invitada
             <input type="checkbox" id="isInvitedCheckbox">
         </label>
+        <label for="barSelector">Bar:</label>
+        <select id="barSelector" required>
+            <option value="" disabled selected>Selecciona un bar</option>
+        </select>
         <button id="addDrinkBtn">+</button>
         <button id="subtractDrinkBtn">-</button>
         <form id="addDrinkForm">
@@ -45,6 +49,12 @@
 
             <button type="submit">Guardar bebida</button>
         </form>
+        <form id="addBarForm">
+            <label for="barName">Nombre del bar:</label>
+            <input type="text" id="barName" name="barName" required>
+            <button type="submit">Añadir bar</button>
+        </form>
+
     </div>
     <div class="display">
         <!-- Vista -->

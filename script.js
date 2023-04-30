@@ -3,6 +3,8 @@ const addDrinkBtn = document.getElementById("addDrinkBtn");
 const subtractDrinkBtn = document.getElementById("subtractDrinkBtn");
 const resetBtn = document.getElementById("resetBtn");
 const addDrinkForm = document.getElementById("addDrinkForm");
+const addBarForm = document.getElementById("addBarForm");
+const barSelector = document.getElementById("barSelector");
 const isInvitedCheckbox = document.getElementById("isInvitedCheckbox");
 const isPaidCheckbox = document.getElementById("isPaidCheckbox");
 const drinkCount = document.getElementById("drinkCount");
@@ -20,7 +22,15 @@ function populateDrinkSelector() {
     drinkSelector.appendChild(option);
   });
 }
-
+function populateBarSelector() {
+  let bars = JSON.parse(localStorage.getItem("bars")) || [];
+  bars.forEach((bar) => {
+    const option = document.createElement("option");
+    option.value = bar;
+    option.textContent = bar;
+    barSelector.appendChild(option);
+  });
+}
 // Función para añadir una bebida al historial
 function addDrink() {
   const selectedDrink = JSON.parse(drinkSelector.value);
@@ -30,6 +40,7 @@ function addDrink() {
     ...selectedDrink,
     isPaid: isPaidCheckbox.checked, // Añadir información de "pagada"
     isInvited: isInvitedCheckbox.checked, // Añadir información de "invitada"
+    bar: barSelector.value, // Añadir información del bar
     timestamp: new Date().getTime(),
   };
 
@@ -67,6 +78,22 @@ function addNewDrink(e) {
     // Actualizar el selector de bebidas y la vista
     populateDrinkSelector();
     updateDisplay();
+}
+
+function addNewBar(e) {
+  e.preventDefault();
+
+  const newBar = addBarForm.barName.value;
+  let bars = JSON.parse(localStorage.getItem("bars")) || [];
+
+  bars.push(newBar);
+  localStorage.setItem("bars", JSON.stringify(bars));
+
+  // Limpiar formulario
+  addBarForm.reset();
+
+  // Actualizar el selector de bares
+  populateBarSelector();
 }
 
 // Función para actualizar la vista
@@ -158,8 +185,9 @@ function updateDisplay() {
 addDrinkBtn.addEventListener("click", addDrink);
 subtractDrinkBtn.addEventListener("click", subtractDrink);
 addDrinkForm.addEventListener("submit", addNewDrink);
-// resetBtn.addEventListener("click", resetDrinkCounter);
+addBarForm.addEventListener("submit", addNewBar);
 
 // Inicialización
 populateDrinkSelector();
+populateBarSelector(); // Llama a la función para llenar el dropdown de bares
 updateDisplay();
