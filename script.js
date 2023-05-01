@@ -67,6 +67,7 @@ function addNewDrink(e) {
     name: addDrinkForm.name.value,
     brand: addDrinkForm.brand.value,
     alcohol: parseFloat(addDrinkForm.alcohol.value),
+    category: addDrinkForm.category.value, // Añadir la propiedad "category"
   };
 
   drinks.push(newDrink);

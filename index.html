@@ -16,11 +16,14 @@
             <option value="" disabled selected>Selecciona una bebida</option>
         </select>
         <label for="drinkStatus">Estado de la bebida:</label>
-        <select id="drinkStatus">
-            <option value="pendiente">Pendiente</option>
-            <option value="pagada">Pagada</option>
-            <option value="invitada">Invitada</option>
-        </select>
+        <label>
+            Pagada
+            <input type="checkbox" id="isPaidCheckbox">
+        </label>
+        <label>
+            Invitada
+            <input type="checkbox" id="isInvitedCheckbox">
+        </label>
         <label for="barSelector">Bar:</label>
         <select id="barSelector" required>
             <option value="" disabled selected>Selecciona un bar</option>
@@ -32,6 +35,11 @@
             <input type="text" id="name" required>
             <label for="brand">Marca:</label>
             <input type="text" id="brand" required>
+            <select name="category" id="category">
+                <option value="Cervezas">Cervezas</option>
+                <option value="Vinos">Vinos</option>
+                <option value="Licores">Licores</option>
+            </select>
             <label for="alcohol">Alcohol (%):</label>
             <!-- <input type="range" id="alcohol" required> -->
             <input id="alcohol" type="number" name="alcohol" step="0.1" max="80" list="defaultNumbers" required />
