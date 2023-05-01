@@ -15,12 +15,14 @@
         <select id="drinkSelector">
             <option value="" disabled selected>Selecciona una bebida</option>
         </select>
-        <label for="drinkStatus">Estado de la bebida:</label>
-        <select id="drinkStatus">
-            <option value="pendiente">Pendiente</option>
-            <option value="pagada">Pagada</option>
-            <option value="invitada">Invitada</option>
-        </select>
+        <label>
+            Pagada
+            <input type="checkbox" id="isPaidCheckbox">
+        </label>
+        <label>
+            Invitada
+            <input type="checkbox" id="isInvitedCheckbox">
+        </label>
         <label for="barSelector">Bar:</label>
         <select id="barSelector" required>
             <option value="" disabled selected>Selecciona un bar</option>
