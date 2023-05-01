@@ -5,8 +5,7 @@ const resetBtn = document.getElementById("resetBtn");
 const addDrinkForm = document.getElementById("addDrinkForm");
 const addBarForm = document.getElementById("addBarForm");
 const barSelector = document.getElementById("barSelector");
-const isInvitedCheckbox = document.getElementById("isInvitedCheckbox");
-const isPaidCheckbox = document.getElementById("isPaidCheckbox");
+const drinkStatusSelector = document.getElementById("drinkStatus");
 const drinkCount = document.getElementById("drinkCount");
 const alcoholCount = document.getElementById("alcoholCount");
 const drinkTable = document.getElementById("drinkTable");
@@ -38,8 +37,7 @@ function addDrink() {
 
   const drinkEntry = {
     ...selectedDrink,
-    isPaid: isPaidCheckbox.checked, // Añadir información de "pagada"
-    isInvited: isInvitedCheckbox.checked, // Añadir información de "invitada"
+    status: drinkStatusSelector.value, // Añadir información del estado
     bar: barSelector.value, // Añadir información del bar
     timestamp: new Date().getTime(),
   };
@@ -110,7 +108,9 @@ function updateDisplay() {
     .reduce((total, entry) => total + entry.alcohol, 0)
     .toFixed(2);
 
-  const unpaidDrinks = last12Hours.filter((entry) => !entry.isPaid);
+  const unpaidDrinks = last12Hours.filter(
+    (entry) => entry.status === "pendiente"
+  );
   const unpaidDrinksCount = document.getElementById("unpaidDrinksCount");
   unpaidDrinksCount.textContent = unpaidDrinks.length;
 
@@ -156,27 +156,29 @@ function updateDisplay() {
     }-${date.getFullYear()}`;
     row.appendChild(dateCell);
 
-    const paidCell = document.createElement("td");
-    paidCell.className = "paid";
-    paidCell.textContent = entry.isPaid ? "Sí" : "No";
-    row.appendChild(paidCell);
+    const statusCell = document.createElement("td");
+    statusCell.className = "status";
+    statusCell.textContent = entry.status;
+    row.appendChild(statusCell);
 
-    const invitedCell = document.createElement("td");
-    invitedCell.className = "invited";
-    invitedCell.textContent = entry.isInvited ? "Sí" : "No";
-    row.appendChild(invitedCell);
+    const statusSelect = document.createElement("select");
+    const pendingOption = document.createElement("option");
+    pendingOption.value = "pendiente";
+    pendingOption.textContent = "Pendiente";
+    statusSelect.appendChild(pendingOption);
 
-    // Crea un input tipo checkbox para la celda de invitaciones
-    const invitedCheckbox = document.createElement("input");
-    invitedCheckbox.type = "checkbox";
-    invitedCheckbox.checked = entry.isInvited;
-    invitedCell.appendChild(invitedCheckbox);
+    const paidOption = document.createElement("option");
+    paidOption.value = "pagada";
+    paidOption.textContent = "Pagada";
+    statusSelect.appendChild(paidOption);
 
-    // Crea un input tipo checkbox para la celda de pagos
-    const paidCheckbox = document.createElement("input");
-    paidCheckbox.type = "checkbox";
-    paidCheckbox.checked = entry.isPaid;
-    paidCell.appendChild(paidCheckbox);
+    const invitedOption = document.createElement("option");
+    invitedOption.value = "invitada";
+    invitedOption.textContent = "Invitada";
+    statusSelect.appendChild(invitedOption);
+
+    statusSelect.value = entry.status;
+    statusCell.appendChild(statusSelect);
 
     // Crea un botón para eliminar el registro
     const deleteBtn = document.createElement("button");
@@ -191,16 +193,12 @@ function updateDisplay() {
       updateDisplay();
     });
 
-    // Añade eventos de cambio a los checkboxes
-    invitedCheckbox.addEventListener("change", () => {
-      entry.isInvited = !entry.isInvited;
+    // Añade eventos de cambio a los select de estado de pago.
+    statusSelect.addEventListener("change", () => {
+      entry.status = statusSelect.value;
       localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
     });
 
-    paidCheckbox.addEventListener("change", () => {
-      entry.isPaid = !entry.isPaid;
-      localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
-    });
 
     tbody.appendChild(row);
   }
