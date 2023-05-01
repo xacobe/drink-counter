@@ -5,7 +5,6 @@ const resetBtn = document.getElementById("resetBtn");
 const addDrinkForm = document.getElementById("addDrinkForm");
 const addBarForm = document.getElementById("addBarForm");
 const barSelector = document.getElementById("barSelector");
-const isInvitedCheckbox = document.getElementById("isInvitedCheckbox");
 const isPaidCheckbox = document.getElementById("isPaidCheckbox");
 const drinkCount = document.getElementById("drinkCount");
 const alcoholCount = document.getElementById("alcoholCount");
@@ -161,17 +160,6 @@ function updateDisplay() {
     paidCell.textContent = entry.isPaid ? "Sí" : "No";
     row.appendChild(paidCell);
 
-    const invitedCell = document.createElement("td");
-    invitedCell.className = "invited";
-    invitedCell.textContent = entry.isInvited ? "Sí" : "No";
-    row.appendChild(invitedCell);
-
-    // Crea un input tipo checkbox para la celda de invitaciones
-    const invitedCheckbox = document.createElement("input");
-    invitedCheckbox.type = "checkbox";
-    invitedCheckbox.checked = entry.isInvited;
-    invitedCell.appendChild(invitedCheckbox);
-
     // Crea un input tipo checkbox para la celda de pagos
     const paidCheckbox = document.createElement("input");
     paidCheckbox.type = "checkbox";
@@ -189,12 +177,6 @@ function updateDisplay() {
       drinkHistory.splice(index, 1);
       localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
       updateDisplay();
-    });
-
-    // Añade eventos de cambio a los checkboxes
-    invitedCheckbox.addEventListener("change", () => {
-      entry.isInvited = !entry.isInvited;
-      localStorage.setItem("drinkHistory", JSON.stringify(drinkHistory));
     });
 
     paidCheckbox.addEventListener("change", () => {
